@@ -272,4 +272,9 @@ abstract class AMapFlutterPlatformInterface extends PlatformInterface {
   Future<void> destroy({required int mapId}) {
     throw UnimplementedError('destroy() has not been implemented.');
   }
+
+  Future<Region> getVisibleMapRectBounds({required int mapId}) {
+    throw UnimplementedError(
+        'getVisibleMapRectBounds() has not been implemented.');
+  }
 }

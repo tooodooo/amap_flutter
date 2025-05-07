@@ -280,4 +280,13 @@ class AMapFlutterWebApi {
   Future<void> resume() async {}
 
   Future<void> destroy() async {}
+
+  Future<List<Object?>> getVisibleMapRectBounds() async {
+    final bounds = aMap.getBounds();
+    final north = (bounds.getNorthEast().getLat() as num).toDouble();
+    final east = (bounds.getNorthEast().getLng() as num).toDouble();
+    final south = (bounds.getSouthWest().getLat() as num).toDouble();
+    final west = (bounds.getSouthWest().getLng() as num).toDouble();
+    return [north, east, south, west];
+  }
 }

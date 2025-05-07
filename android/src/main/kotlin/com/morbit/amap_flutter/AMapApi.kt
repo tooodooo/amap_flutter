@@ -122,4 +122,14 @@ class AMapApi(private val amap: AMapFlutter, private val config: MapInitConfig?)
   fun destroy() {
     mapView.onDestroy()
   }
+
+  fun getVisibleMapRectBounds(): Region {
+    val bounds = mapView.map.bounds
+    return Region(
+      north = bounds.northeast.latitude,
+      east = bounds.northeast.longitude,
+      south = bounds.southwest.latitude,
+      west = bounds.southwest.longitude
+    )
+  }
 }

@@ -455,7 +455,8 @@ class AMapFlutterMethodChannel extends AMapFlutterPlatformInterface {
   /// 获取当前定位信息
   @override
   Future<Location> getUserLocation({required int mapId}) async {
-    final result = await _channel(mapId).invokeMethod<Location>("getUserLocation");
+    final result =
+        await _channel(mapId).invokeMethod<Location>("getUserLocation");
     if (result == null) throw "Failed to get user location";
     return result;
   }
@@ -485,5 +486,13 @@ class AMapFlutterMethodChannel extends AMapFlutterPlatformInterface {
       _channels.remove(mapId);
     }
     return _channel(mapId).invokeMethod("destroy");
+  }
+
+  @override
+  Future<Region> getVisibleMapRectBounds({required int mapId}) async {
+    final result = await _channel(mapId)
+        .invokeMethod<List<Object?>>("getVisibleMapRectBounds");
+    if (result == null) throw "Failed to get visible map rect bounds";
+    return Region.decode(result);
   }
 }

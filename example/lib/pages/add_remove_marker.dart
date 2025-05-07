@@ -61,6 +61,10 @@ class _AddRemoveMarkerPageState extends State<AddRemoveMarkerPage> {
     );
     markers[markerId] = marker;
     controller.addMarker(marker);
+    final region = await controller.getVisibleMapRectBounds();
+    debugPrint("返回区域：$region");
+    debugPrint("返回区域：${region.north}");
+    debugPrint("返回区域：${region.east}");
   }
 
   void onMarkerClick(String markerId) {

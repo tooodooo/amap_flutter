@@ -86,6 +86,8 @@ class AMapController: NSObject {
     else if(call.method == "destroy") {
       api.destroy()
       result(nil)
+    } else if(call.method == "getVisibleMapRectBounds") {
+        result(api.getVisibleMapRectBounds())
     }
   }
 

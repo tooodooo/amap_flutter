@@ -64,6 +64,11 @@ class AMapController(viewId: Int, binding: FlutterPluginBinding, private val api
         result.success(null)
       }
 
+      "getVisibleMapRectBounds" -> {
+        val region = api.getVisibleMapRectBounds()
+        result.success(region.encode())
+      }
+
       "addMarker" -> {
         val marker = call.argument<Marker>("marker")!!
         api.addMarker(marker)

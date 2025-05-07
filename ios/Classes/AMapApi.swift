@@ -220,4 +220,18 @@ class _AMapApi: NSObject {
   func resume() { }
 
   func destroy() { }
+    
+    // 获取当前地图可视范围的矩形范围
+    func getVisibleMapRectBounds() -> [Any?] {
+        // 获取地图视图的四个角点坐标
+        let topRightPoint = CGPoint(x: mapView.bounds.width, y: 0)
+        let bottomLeftPoint = CGPoint(x: 0, y: mapView.bounds.height)
+
+        // 将点坐标转换为经纬度坐标
+        let northEast = mapView.convert(topRightPoint, toCoordinateFrom: mapView)
+        let southWest = mapView.convert(bottomLeftPoint, toCoordinateFrom: mapView)
+
+        // 返回四个角点的经纬度坐标
+        return [northEast.latitude, northEast.longitude, southWest.latitude, southWest.longitude]
+    }
 }
