@@ -56,6 +56,8 @@ class _AddRemoveMarkerPageState extends State<AddRemoveMarkerPage> {
       bitmap: Bitmap(
         asset: "assets/map-marker.png",
       ),
+      count: 5,
+      pois: [],
     );
     markers[markerId] = marker;
     controller.addMarker(marker);

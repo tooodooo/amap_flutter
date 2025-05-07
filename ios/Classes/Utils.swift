@@ -3,15 +3,28 @@ import Flutter
 import MAMapKit
 import UIKit
 
+enum PoiType : Int {
+    case none
+    case free
+    case fishpond
+    case store
+}
+
 class Annotation: MAPointAnnotation {
   let id: String
   let bitmap: Bitmap?
+    var poiType:PoiType
+    var count:UInt
 
-  init(id: String, position: Position, bitmap: Bitmap?) {
+    init(id: String, position: Position, bitmap: Bitmap?, poiType:PoiType, count:UInt) {
     self.id = id
     self.bitmap = bitmap
+    self.poiType = poiType
+    self.count = count
     super.init()
     self.coordinate = position.coordinate
+      
+        
   }
 }
 
@@ -139,7 +152,7 @@ extension MapType {
 
 extension Marker {
   var annotation: Annotation {
-    return Annotation(id: id, position: position, bitmap: bitmap)
+      return Annotation(id: id, position: position, bitmap: bitmap, poiType: poiType, count: count)
   }
 }
 

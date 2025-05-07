@@ -22,16 +22,23 @@ class AMapViewDelegate: NSObject, MAMapViewDelegate {
 
   func mapView(_ mapView: MAMapView!, viewFor _annotation: MAAnnotation!) -> MAAnnotationView! {
     if let annotation = _annotation as? Annotation {
-      var annotationView: MAAnnotationView
-      if let bitmap = annotation.bitmap {
-        annotationView = MAAnnotationView(annotation: annotation, reuseIdentifier: annotation.id)
-        annotationView.image = bitmap.toUIImage(registrar: registrar)
-        annotationView.layer.anchorPoint = CGPointMake(0.5, 1)
-      } else {
-        annotationView = MAPinAnnotationView(annotation: annotation, reuseIdentifier: annotation.id)
-      }
-      annotationView.isDraggable = true
-      return annotationView
+        if annotation.count > 1 {
+            var annotationView: ClusterAnnotationView
+              annotationView = ClusterAnnotationView(annotation: annotation, reuseIdentifier: annotation.id)
+            annotationView.count = annotation.count
+              return annotationView
+        } else {
+            var annotationView: MAAnnotationView
+            if let bitmap = annotation.bitmap {
+              annotationView = MAAnnotationView(annotation: annotation, reuseIdentifier: annotation.id)
+              annotationView.image = bitmap.toUIImage(registrar: registrar)
+              annotationView.layer.anchorPoint = CGPointMake(0.5, 1)
+            } else {
+              annotationView = MAPinAnnotationView(annotation: annotation, reuseIdentifier: annotation.id)
+            }
+            annotationView.isDraggable = true
+            return annotationView
+        }
     }
     return nil
   }

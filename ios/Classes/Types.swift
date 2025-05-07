@@ -493,6 +493,13 @@ struct Marker {
   var position: Position
   /// 标记点自定义图标信息
   var bitmap: Bitmap?
+    // 点聚合数量
+    var count: UInt
+    // 如果是聚合类型，此为标点数组
+    var pois: Array<Any>
+    // 标点类型
+    var poiType: PoiType
+    //
 
   static func fromList(_ list: [Any?]) -> Marker {
     let id = list[0] as! String
@@ -501,10 +508,17 @@ struct Marker {
     if let bitmapList: [Any?] = nilOrValue(list[2]) {
       bitmap = Bitmap.fromList(bitmapList)
     }
+      let count : UInt = list[3] as! UInt
+      let poiType: UInt8 = list[4] as! UInt8
+      let pois : Array = list[5] as! Array<Any>
+
     return Marker(
       id: id,
       position: position,
-      bitmap: bitmap
+      bitmap: bitmap,
+      count: count,
+      pois: pois,
+      poiType: PoiType(rawValue: PoiType.RawValue(poiType)) ?? PoiType.none
     )
   }
 
@@ -513,6 +527,9 @@ struct Marker {
       id,
       position.toList(),
       bitmap?.toList(),
+      count,
+      poiType,
+      pois
     ]
   }
 }

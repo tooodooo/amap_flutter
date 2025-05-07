@@ -34,11 +34,11 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   AMap3DMap: dce25dd3e51e6b92109caa7d0c97fc6055830fb3
-  amap_flutter: 002ff8f5eb991f9e4f1f8b4c3f2261669d58040c
+  amap_flutter: b4fb6010753fc677d1e546f7fe47281e00fe5347
   AMapFoundation: 9885c48fc3a78fdfb84a0299a2293e56ea3c9fec
   Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
-  integration_test: 252f60fa39af5e17c3aa9899d35d908a0721b573
-  permission_handler_apple: 9878588469a2b0d0fc1e048d9f43605f92e6cec2
+  integration_test: 4a889634ef21a45d28d50d622cf412dc6d9f586e
+  permission_handler_apple: 4ed2196e43d0651e8ff7ca3483a069d469701f2d
 
 PODFILE CHECKSUM: 819463e6a0290f5a72f145ba7cde16e8b6ef0796
 

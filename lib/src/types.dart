@@ -514,9 +514,13 @@ class MapInitConfig {
     return MapInitConfig(
       mapType: result[0] as MapType?,
       mapStyle: result[1] as String?,
-      cameraPosition: result[2] != null ? CameraPosition.decode(result[2]! as List<Object?>) : null,
+      cameraPosition: result[2] != null
+          ? CameraPosition.decode(result[2]! as List<Object?>)
+          : null,
       fitPositions: result[3] != null
-          ? (result[3] as List).map((position) => Position.decode(position)).toList()
+          ? (result[3] as List)
+              .map((position) => Position.decode(position))
+              .toList()
           : null,
       minZoom: result[4] as double?,
       maxZoom: result[5] as double?,
@@ -530,8 +534,9 @@ class MapInitConfig {
       compassControlEnabled: result[13] as bool?,
       scaleControlEnabled: result[14] as bool?,
       zoomControlEnabled: result[15] as bool?,
-      logoPosition:
-          result[16] != null ? UIControlPosition.decode(result[16]! as List<Object?>) : null,
+      logoPosition: result[16] != null
+          ? UIControlPosition.decode(result[16]! as List<Object?>)
+          : null,
       doubleClickZoom: result[17] as bool?,
       scrollWheel: result[18] as bool?,
       touchZoom: result[19] as bool?,
@@ -596,7 +601,8 @@ class MapInitConfig {
       jogEnable: jogEnable ?? this.jogEnable,
       animateEnable: animateEnable ?? this.animateEnable,
       keyboardEnable: keyboardEnable ?? this.keyboardEnable,
-      compassControlEnabled: compassControlEnabled ?? this.compassControlEnabled,
+      compassControlEnabled:
+          compassControlEnabled ?? this.compassControlEnabled,
       scaleControlEnabled: scaleControlEnabled ?? this.scaleControlEnabled,
       zoomControlEnabled: zoomControlEnabled ?? this.zoomControlEnabled,
       logoPosition: logoPosition ?? this.logoPosition,
@@ -752,21 +758,26 @@ class MapUpdateConfig {
       zoomControlEnabled: result[9] as bool?,
       hawkEyeControlEnabled: result[10] as bool?,
       mapTypeControlEnabled: result[11] as bool?,
-      logoPosition:
-          result[12] != null ? UIControlPosition.decode(result[12]! as List<Object?>) : null,
-      compassControlPosition:
-          result[13] != null ? UIControlPosition.decode(result[13]! as List<Object?>) : null,
-      scaleControlPosition:
-          result[14] != null ? UIControlPosition.decode(result[14]! as List<Object?>) : null,
-      zoomControlPosition:
-          result[15] != null ? UIControlPosition.decode(result[15]! as List<Object?>) : null,
+      logoPosition: result[12] != null
+          ? UIControlPosition.decode(result[12]! as List<Object?>)
+          : null,
+      compassControlPosition: result[13] != null
+          ? UIControlPosition.decode(result[13]! as List<Object?>)
+          : null,
+      scaleControlPosition: result[14] != null
+          ? UIControlPosition.decode(result[14]! as List<Object?>)
+          : null,
+      zoomControlPosition: result[15] != null
+          ? UIControlPosition.decode(result[15]! as List<Object?>)
+          : null,
       showTraffic: result[16] as bool?,
       showBuildings: result[17] as bool?,
       showIndoorMap: result[18] as bool?,
       showSatelliteLayer: result[19] as bool?,
       showRoadNetLayer: result[20] as bool?,
-      userLocationConfig:
-          result[21] != null ? UserLocationConfig.decode(result[21]! as List<Object?>) : null,
+      userLocationConfig: result[21] != null
+          ? UserLocationConfig.decode(result[21]! as List<Object?>)
+          : null,
     );
   }
 
@@ -802,13 +813,17 @@ class MapUpdateConfig {
       zoomEnable: zoomEnable ?? this.zoomEnable,
       tiltEnable: tiltEnable ?? this.tiltEnable,
       rotateEnable: rotateEnable ?? this.rotateEnable,
-      compassControlEnabled: compassControlEnabled ?? this.compassControlEnabled,
+      compassControlEnabled:
+          compassControlEnabled ?? this.compassControlEnabled,
       scaleControlEnabled: scaleControlEnabled ?? this.scaleControlEnabled,
       zoomControlEnabled: zoomControlEnabled ?? this.zoomControlEnabled,
-      hawkEyeControlEnabled: hawkEyeControlEnabled ?? this.hawkEyeControlEnabled,
-      mapTypeControlEnabled: mapTypeControlEnabled ?? this.mapTypeControlEnabled,
+      hawkEyeControlEnabled:
+          hawkEyeControlEnabled ?? this.hawkEyeControlEnabled,
+      mapTypeControlEnabled:
+          mapTypeControlEnabled ?? this.mapTypeControlEnabled,
       logoPosition: logoPosition ?? this.logoPosition,
-      compassControlPosition: compassControlPosition ?? this.compassControlPosition,
+      compassControlPosition:
+          compassControlPosition ?? this.compassControlPosition,
       scaleControlPosition: scaleControlPosition ?? this.scaleControlPosition,
       zoomControlPosition: zoomControlPosition ?? this.zoomControlPosition,
       showTraffic: showTraffic ?? this.showTraffic,
@@ -827,6 +842,9 @@ class Marker {
     required this.id,
     required this.position,
     this.bitmap,
+    this.count = 1,
+    required this.pois,
+    this.poiType = 0,
   });
 
   /// 标记点ID
@@ -837,12 +855,18 @@ class Marker {
 
   /// 标记点自定义图标信息
   Bitmap? bitmap;
+  int count;
+  List pois;
+  int poiType;
 
   Object encode() {
     return <Object?>[
       id,
       position.encode(),
       bitmap?.encode(),
+      count,
+      poiType,
+      pois,
     ];
   }
 
@@ -850,7 +874,11 @@ class Marker {
     return Marker(
       id: result[0]! as String,
       position: Position.decode(result[1]! as List<Object?>),
-      bitmap: result[2] != null ? Bitmap.decode(result[2]! as List<Object?>) : null,
+      bitmap:
+          result[2] != null ? Bitmap.decode(result[2]! as List<Object?>) : null,
+      count: result[3]! as int,
+      poiType: result[4]! as int,
+      pois: result[5]! as List<Object?>,
     );
   }
 
@@ -863,6 +891,9 @@ class Marker {
       id: id ?? this.id,
       position: position ?? this.position,
       bitmap: bitmap ?? this.bitmap,
+      count: count,
+      poiType: poiType,
+      pois: pois,
     );
   }
 }
@@ -910,9 +941,11 @@ class Position {
   Position({
     required double latitude,
     required double longitude,
-  })  : latitude = latitude < -90.0 ? -90.0 : (latitude > 90.0 ? 90.0 : latitude),
-        longitude =
-        longitude >= -180 && longitude < 180 ? longitude : (longitude + 180.0) % 360.0 - 180.0;
+  })  : latitude =
+            latitude < -90.0 ? -90.0 : (latitude > 90.0 ? 90.0 : latitude),
+        longitude = longitude >= -180 && longitude < 180
+            ? longitude
+            : (longitude + 180.0) % 360.0 - 180.0;
 
   /// 位置的纬度
   double latitude;
@@ -1135,8 +1168,9 @@ class UserLocationConfig {
     return UserLocationConfig(
       userLocationButton: result[0] as bool?,
       showUserLocation: result[1] as bool?,
-      userLocationStyle:
-          result[2] != null ? UserLocationStyle.decode(result[2]! as List<Object?>) : null,
+      userLocationStyle: result[2] != null
+          ? UserLocationStyle.decode(result[2]! as List<Object?>)
+          : null,
     );
   }
 
@@ -1194,7 +1228,8 @@ class UserLocationStyle {
       fillColor: result[1] != null ? Color(result[1] as int) : null,
       strokeColor: result[2] != null ? Color(result[2] as int) : null,
       lineWidth: result[3] as double?,
-      image: result[4] != null ? Bitmap.decode(result[4]! as List<Object?>) : null,
+      image:
+          result[4] != null ? Bitmap.decode(result[4]! as List<Object?>) : null,
     );
   }
 
